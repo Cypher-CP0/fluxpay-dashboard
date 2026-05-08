@@ -31,35 +31,26 @@ export function MerchantProvider({ children }: { children: ReactNode }) {
     const fetchMerchant = async () => {
         setLoading(true)
         try {
-            // Get API key from Supabase user metadata or localStorage
-            const apiKey = localStorage.getItem('fp_api_key')
-            if (!apiKey) {
-                // Try to get it from backend using supabase user id
-                const supabase = createClient()
-                const { data: { user } } = await supabase.auth.getUser()
-                if (!user) return
-
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/merchants/by-user/${user.id}`
-                )
-                if (!res.ok) return
-                const data = await res.json()
-                localStorage.setItem('fp_api_key', data.api_key)
-                setMerchant(data)
-            } else {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/merchants/me`,
-                    { headers: { 'x-api-key': apiKey } }
-                )
-                if (!res.ok) {
-                    localStorage.removeItem('fp_api_key')
-                    return
-                }
-                const data = await res.json()
-                setMerchant(data)
+            const supabase = createClient()
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user) {
+                setMerchant(null)
+                return
             }
+
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/merchants/by-user/${user.id}`
+            )
+            if (!res.ok) {
+                setMerchant(null)
+                return
+            }
+
+            const data = await res.json()
+            setMerchant(data)
         } catch (err) {
             console.error('Failed to fetch merchant:', err)
+            setMerchant(null)
         } finally {
             setLoading(false)
         }

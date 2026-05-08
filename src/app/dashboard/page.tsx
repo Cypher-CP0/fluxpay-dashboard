@@ -84,6 +84,39 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Onboarding banner */}
+        {merchant && !merchant.payout_wallet && (
+          <div style={{
+            background: 'rgba(245,158,11,0.08)',
+            border: '1px solid rgba(245,158,11,0.3)',
+            borderRadius: 12, padding: '16px 20px', marginBottom: 24,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+              <span style={{ fontSize: 18 }}>⚠️</span>
+              <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--warning)' }}>
+                Complete your setup to start accepting payments
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[
+                { done: false, label: 'Set your payout wallet', href: '/dashboard/settings', action: 'Go to Settings →' },
+                { done: true, label: 'Copy your API key', href: '/dashboard/embed', action: 'View Embed Code →' },
+                { done: false, label: 'Add embed code to your site', href: '/dashboard/embed', action: 'Get Embed Code →' },
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span>{item.done ? '✅' : '☐'}</span>
+                    <span style={{ fontSize: 13, color: item.done ? 'var(--text-muted)' : 'var(--text-primary)' }}>{item.label}</span>
+                  </div>
+                  {!item.done && (
+                    <a href={item.href} style={{ fontSize: 12, color: 'var(--warning)', fontWeight: 500 }}>{item.action}</a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Stat Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
           <StatCard

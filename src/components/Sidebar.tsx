@@ -30,18 +30,15 @@ export default function Sidebar() {
       display: 'flex', flexDirection: 'column',
       height: '100vh', position: 'fixed', left: 0, top: 0,
     }}>
-      {/* Logo */}
       <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid var(--border)' }}>
-        <div style={{
-          fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20,
-          color: 'var(--text-primary)', letterSpacing: '-0.02em',
-        }}>FluxPay</div>
+        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+          FluxPay
+        </div>
         <div style={{ fontSize: 10, letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: 2 }}>
           KINETIC ENGINE
         </div>
       </div>
 
-      {/* Nav */}
       <nav style={{ flex: 1, padding: '16px 12px' }}>
         {navItems.map(item => {
           const active = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))
@@ -64,8 +61,10 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* API Status */}
-      <div style={{ margin: '12px', padding: '12px 14px', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 10 }}>
+      <div style={{
+        margin: '12px', padding: '12px 14px',
+        background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 10,
+      }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{
             width: 36, height: 36,
@@ -83,7 +82,6 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Sign out */}
       <button onClick={handleSignOut} style={{
         margin: '0 12px 16px', padding: '10px 14px',
         background: 'none', border: '1px solid var(--border)',
